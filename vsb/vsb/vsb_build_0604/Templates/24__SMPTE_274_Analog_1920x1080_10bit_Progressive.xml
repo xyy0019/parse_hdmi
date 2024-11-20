@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<Template Name="SMPTE 274 Analog_1920x1080_10bit(Progressive)" Interlacing="Progressive" CyclesPerPixel="1" Description="1080P 60 Hz">
+	<ColorSpaceConversion>
+		<BitDepth Value="10" />
+		<Equations>
+			<Equation Name="Yout">
+				<RCoeff Value="0.2126" />
+				<GCoeff Value="0.7152" />
+				<BCoeff Value="0.0722" />
+				<Scale Value="0.7" />
+				<Offset Value="256" />
+			</Equation>
+			<Equation Name="PRout">
+				<RCoeff Value="0.5" />
+				<GCoeff Value="-0.45415" />
+				<BCoeff Value="-0.04585" />
+				<Scale Value="0.857143" />
+				<Offset Value="512" />
+			</Equation>
+			<Equation Name="PBout">
+				<RCoeff Value="-0.11457" />
+				<GCoeff Value="-0.38543" />
+				<BCoeff Value="0.5" />
+				<Scale Value="0.857143" />
+				<Offset Value="512" />
+			</Equation>
+		</Equations>
+	</ColorSpaceConversion>
+	<Syncs>
+		<EmbeddedAnalog>
+			<SyncHigh Value="768" />
+			<SyncLow Value="16" />
+			<ZeroLevel Value="511" />
+			<HeaderColumns Value="0-219;220;221-279;280-2198;2199" />
+			<Elements>
+				<Element Lines="1-5" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="0,0" ColumnSpan="1" />
+				<Element Lines="1-5" Columns="220" Type="Value" Value="ZeroLevel/2" Offset="0,1" ColumnSpan="1" />
+				<Element Lines="1-5" Columns="221-2198" Type="Value" Value="SyncLow" Offset="0,2" ColumnSpan="2" />
+				<Element Lines="1-5" Columns="2199" Type="Value" Value="ZeroLevel/2" Offset="0,4" ColumnSpan="1" />
+				<Element Lines="6-41" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="1,0" ColumnSpan="1" />
+				<Element Lines="6-41" Columns="220-2199" Type="Value" Value="ZeroLevel" Offset="1,1" ColumnSpan="4" />
+				<Element Lines="42-1121" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="2,0" ColumnSpan="1" />
+				<Element Lines="42-1121" Columns="220-279" Type="Value" Value="ZeroLevel" Offset="2,1" ColumnSpan="2" />
+				<Element Lines="42-1121" Columns="280-2199" Type="Video" Value="ActiveVideo" Offset="2,3" ColumnSpan="2" />
+				<Element Lines="1122-1125" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="3,0" ColumnSpan="1" />
+				<Element Lines="1122-1125" Columns="220-2199" Type="Value" Value="ZeroLevel" Offset="3,1" ColumnSpan="4" />
+			</Elements>
+			<HSyncPulse>
+				<Elements>
+					<Element Columns="0-43" Value="ZeroLevel" />
+					<Element Columns="44" Value="ZeroLevel/2" />
+					<Element Columns="45-86" Value="SyncLow" />
+					<Element Columns="87" Value="ZeroLevel/2" />
+					<Element Columns="88" Value="ZeroLevel" />
+					<Element Columns="89" Value="3/2ZeroLevel" />
+					<Element Columns="90-131" Value="SyncHigh" />
+					<Element Columns="132" Value="3/2ZeroLevel" />
+					<Element Columns="133-219" Value="ZeroLevel" />
+				</Elements>
+			</HSyncPulse>
+		</EmbeddedAnalog>
+	</Syncs>
+	<VCSSFileFormat>
+		<Cycles>
+			<Cycle>
+				<ClockCycle Name="ClockCycle" Value="Cycle #0" />
+				<ByteA Name="ByteA[7:0]" Value="Pr[9:2]" />
+				<ByteB Name="ByteB[7:0]" Value="Pb[9:2]" />
+				<ByteC Name="ByteC[7:0]" Value="Y[9:2]" />
+				<ByteD Name="ByteD[7:0]" Value="Y0[1:0],Pb[1:0],Pr[1:0],xx" />
+			</Cycle>
+		</Cycles>
+	</VCSSFileFormat>
+</Template>

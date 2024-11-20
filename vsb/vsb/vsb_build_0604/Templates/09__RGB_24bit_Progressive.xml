@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<Template Name="09__RGB_24bit_Progressive" Interlacing="Progressive" CyclesPerPixel="1" Description="">
+  <ColorSpaceConversion>
+    <BitDepth Value="8" />
+    <Equations>
+      <Equation Name="Rout">
+        <RCoeff Value="0.8591" />
+        <GCoeff Value="0" />
+        <BCoeff Value="0" />
+        <Scale Value="1" />
+        <Offset Value="16" />
+      </Equation>
+      <Equation Name="Gout">
+        <RCoeff Value="0" />
+        <GCoeff Value="0.8591" />
+        <BCoeff Value="0" />
+        <Scale Value="1" />
+        <Offset Value="16" />
+      </Equation>
+      <Equation Name="Bout">
+        <RCoeff Value="0" />
+        <GCoeff Value="0" />
+        <BCoeff Value="0.8591" />
+        <Scale Value="1" />
+        <Offset Value="16" />
+      </Equation>
+    </Equations>
+  </ColorSpaceConversion>
+  <Syncs>
+    <SeparateSignals>
+      <Blanking BlankedLines="100" BlankedPixels="200" />
+      <ActiveVideoSize Width="800" Height="600" />
+      <Signal Name="HSync">
+        <CntlBit Value="0" />
+        <Sets>
+          <Set LinesNumber="Default" ActivePulse="0" FirstBit="100" LastBit="110" />
+        </Sets>
+      </Signal>
+      <Signal Name="VSync">
+        <CntlBit Value="1" />
+        <Sets>
+          <Set LinesNumber="25-75" ActivePulse="0" FirstBit="0" LastBit="1000" />
+        </Sets>
+      </Signal>
+    </SeparateSignals>
+  </Syncs>
+  <VCSSFileFormat>
+    <Cycles>
+      <Cycle>
+        <ClockCycle Name="ClockCycle" Value="Cycle #0" />
+        <ByteA Name="ByteA[7:0]" Value="B[7:0]" />
+        <ByteB Name="ByteB[7:0]" Value="G[7:0]" />
+        <ByteC Name="ByteC[7:0]" Value="R[7:0]" />
+        <ByteD Name="ByteD[7:0]" Value="CNTL[7:0]" />
+      </Cycle>
+    </Cycles>
+  </VCSSFileFormat>
+</Template>

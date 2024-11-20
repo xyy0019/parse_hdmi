@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<Template Name="DTV DIGITAL RGB_1920x1080_(SMPTE 274)10bit(Interlaced_odd)" Interlacing="OddLinesFirst" CyclesPerPixel="1" Description="">
+	<ColorSpaceConversion>
+		<BitDepth Value="10" />
+		<Equations>
+			<Equation Name="Rout">
+				<RCoeff Value="0.8591" />
+				<GCoeff Value="0" />
+				<BCoeff Value="0" />
+				<Scale Value="1" />
+				<Offset Value="64" />
+			</Equation>
+			<Equation Name="Gout">
+				<RCoeff Value="0" />
+				<GCoeff Value="0.8591" />
+				<BCoeff Value="0" />
+				<Scale Value="1" />
+				<Offset Value="64" />
+			</Equation>
+			<Equation Name="Bout">
+				<RCoeff Value="0" />
+				<GCoeff Value="0" />
+				<BCoeff Value="0.8591" />
+				<Scale Value="1" />
+				<Offset Value="64" />
+			</Equation>
+		</Equations>
+	</ColorSpaceConversion>
+	<Syncs>
+		<EmbeddedSyncWords>
+			<Elements Rows="6" Columns="10">
+				<Element Lines="1-20" Columns="0" Type="Value" Value="0xFF" Offset="0,0" />
+				<Element Lines="1-20" Columns="1" Type="Value" Value="0x00" Offset="0,1" />
+				<Element Lines="1-20" Columns="2" Type="Value" Value="0x00" Offset="0,2" />
+				<Element Lines="1-20" Columns="3" Type="Value" Value="0xB6" Offset="0,3" />
+				<Element Lines="1-20" Columns="4-275" Type="Value" Value="0x00" Offset="0,4" />
+				<Element Lines="1-20" Columns="276" Type="Value" Value="0xFF" Offset="0,5" />
+				<Element Lines="1-20" Columns="277" Type="Value" Value="0x00" Offset="0,6" />
+				<Element Lines="1-20" Columns="278" Type="Value" Value="0x00" Offset="0,7" />
+				<Element Lines="1-20" Columns="279" Type="Value" Value="0xAB" Offset="0,8" />
+				<Element Lines="1-20" Columns="280-2199" Type="Value" Value="0x00" Offset="0,9" />
+				<Element Lines="21-560" Columns="0" Type="Value" Value="0xFF" Offset="1,0" />
+				<Element Lines="21-560" Columns="1" Type="Value" Value="0x00" Offset="1,1" />
+				<Element Lines="21-560" Columns="2" Type="Value" Value="0x00" Offset="1,2" />
+				<Element Lines="21-560" Columns="3" Type="Value" Value="0x9D" Offset="1,3" />
+				<Element Lines="21-560" Columns="4-275" Type="Value" Value="0x00" Offset="1,4" />
+				<Element Lines="21-560" Columns="276" Type="Value" Value="0xFF" Offset="1,5" />
+				<Element Lines="21-560" Columns="277" Type="Value" Value="0x00" Offset="1,6" />
+				<Element Lines="21-560" Columns="278" Type="Value" Value="0x00" Offset="1,7" />
+				<Element Lines="21-560" Columns="279" Type="Value" Value="0x80" Offset="1,8" />
+				<Element Lines="21-560" Columns="280-2199" Type="Video" Value="Field 1" Offset="1,9" />
+				<Element Lines="561-563" Columns="0" Type="Value" Value="0xFF" Offset="2,0" />
+				<Element Lines="561-563" Columns="1" Type="Value" Value="0x00" Offset="2,1" />
+				<Element Lines="561-563" Columns="2" Type="Value" Value="0x00" Offset="2,2" />
+				<Element Lines="561-563" Columns="3" Type="Value" Value="0xB6" Offset="2,3" />
+				<Element Lines="561-563" Columns="4-275" Type="Value" Value="0x00" Offset="2,4" />
+				<Element Lines="561-563" Columns="276" Type="Value" Value="0xFF" Offset="2,5" />
+				<Element Lines="561-563" Columns="277" Type="Value" Value="0x00" Offset="2,6" />
+				<Element Lines="561-563" Columns="278" Type="Value" Value="0x00" Offset="2,7" />
+				<Element Lines="561-563" Columns="279" Type="Value" Value="0xAB" Offset="2,8" />
+				<Element Lines="561-563" Columns="280-2199" Type="Value" Value="0x00" Offset="2,9" />
+				<Element Lines="564-583" Columns="0" Type="Value" Value="0xFF" Offset="3,0" />
+				<Element Lines="564-583" Columns="1" Type="Value" Value="0x00" Offset="3,1" />
+				<Element Lines="564-583" Columns="2" Type="Value" Value="0x00" Offset="3,2" />
+				<Element Lines="564-583" Columns="3" Type="Value" Value="0xF1" Offset="3,3" />
+				<Element Lines="564-583" Columns="4-275" Type="Value" Value="0x00" Offset="3,4" />
+				<Element Lines="564-583" Columns="276" Type="Value" Value="0xFF" Offset="3,5" />
+				<Element Lines="564-583" Columns="277" Type="Value" Value="0x00" Offset="3,6" />
+				<Element Lines="564-583" Columns="278" Type="Value" Value="0x00" Offset="3,7" />
+				<Element Lines="564-583" Columns="279" Type="Value" Value="0xEC" Offset="3,8" />
+				<Element Lines="564-583" Columns="280-2199" Type="Value" Value="0x00" Offset="3,9" />
+				<Element Lines="584-1123" Columns="0" Type="Value" Value="0xFF" Offset="4,0" />
+				<Element Lines="584-1123" Columns="1" Type="Value" Value="0x00" Offset="4,1" />
+				<Element Lines="584-1123" Columns="2" Type="Value" Value="0x00" Offset="4,2" />
+				<Element Lines="584-1123" Columns="3" Type="Value" Value="0xDA" Offset="4,3" />
+				<Element Lines="584-1123" Columns="4-275" Type="Value" Value="0x00" Offset="4,4" />
+				<Element Lines="584-1123" Columns="276" Type="Value" Value="0xFF" Offset="4,5" />
+				<Element Lines="584-1123" Columns="277" Type="Value" Value="0x00" Offset="4,6" />
+				<Element Lines="584-1123" Columns="278" Type="Value" Value="0x00" Offset="4,7" />
+				<Element Lines="584-1123" Columns="279" Type="Value" Value="0xC7" Offset="4,8" />
+				<Element Lines="584-1123" Columns="280-2199" Type="Video" Value="Field 2" Offset="4,9" />
+				<Element Lines="1124-1125" Columns="0" Type="Value" Value="0xFF" Offset="5,0" />
+				<Element Lines="1124-1125" Columns="1" Type="Value" Value="0x00" Offset="5,1" />
+				<Element Lines="1124-1125" Columns="2" Type="Value" Value="0x00" Offset="5,2" />
+				<Element Lines="1124-1125" Columns="3" Type="Value" Value="0xF1" Offset="5,3" />
+				<Element Lines="1124-1125" Columns="4-275" Type="Value" Value="0x00" Offset="5,4" />
+				<Element Lines="1124-1125" Columns="276" Type="Value" Value="0xFF" Offset="5,5" />
+				<Element Lines="1124-1125" Columns="277" Type="Value" Value="0x00" Offset="5,6" />
+				<Element Lines="1124-1125" Columns="278" Type="Value" Value="0x00" Offset="5,7" />
+				<Element Lines="1124-1125" Columns="279" Type="Value" Value="0xEC" Offset="5,8" />
+				<Element Lines="1124-1125" Columns="280-2199" Type="Value" Value="0x00" Offset="5,9" />
+			</Elements>
+		</EmbeddedSyncWords>
+	</Syncs>
+	<VCSSFileFormat>
+		<Cycles>
+			<Cycle>
+				<ClockCycle Name="ClockCycle" Value="Cycle #0" />
+				<ByteA Name="ByteA[7:0]" Value="B[9:2]" />
+				<ByteB Name="ByteB[7:0]" Value="G[9:2]" />
+				<ByteC Name="ByteC[7:0]" Value="R[9:2]" />
+				<ByteD Name="ByteD[7:0]" Value="R[1:0],G[1:0],B[1:0],xx" />
+			</Cycle>
+		</Cycles>
+	</VCSSFileFormat>
+</Template>

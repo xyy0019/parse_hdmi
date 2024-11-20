@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<Template Name="04__YCrCb_422__8bit_Interlaced_Odd" Interlacing="OddLinesFirst" CyclesPerPixel="2" Description="">
+  <ColorSpaceConversion>
+    <BitDepth Value="8" />
+    <Equations>
+      <Equation Name="Yout">
+        <RCoeff Value="0.257" />
+        <GCoeff Value="0.504" />
+        <BCoeff Value="0.098" />
+        <Scale Value="1" />
+        <Offset Value="16" />
+      </Equation>
+      <Equation Name="CBout">
+        <RCoeff Value="-0.148" />
+        <GCoeff Value="-0.291" />
+        <BCoeff Value="0.439" />
+        <Scale Value="1" />
+        <Offset Value="128" />
+      </Equation>
+      <Equation Name="CRout">
+        <RCoeff Value="0.439" />
+        <GCoeff Value="-0.368" />
+        <BCoeff Value="-0.071" />
+        <Scale Value="1" />
+        <Offset Value="128" />
+      </Equation>
+    </Equations>
+  </ColorSpaceConversion>
+  <Syncs>
+    <SeparateSignals>
+      <Blanking BlankedLines="100" BlankedPixels="400" />
+      <ActiveVideoSize Width="1600" Height="600" />
+      <Signal Name="HSync">
+        <CntlBit Value="0" />
+        <Sets>
+          <Set LinesNumber="Default" ActivePulse="0" FirstBit="100" LastBit="110" />
+        </Sets>
+      </Signal>
+      <Signal Name="VSync">
+        <CntlBit Value="1" />
+        <Sets>
+          <Set LinesNumber="50-60" ActivePulse="0" FirstBit="0" LastBit="2000" />
+        </Sets>
+      </Signal>
+    </SeparateSignals>
+  </Syncs>
+  <VCSSFileFormat>
+    <Cycles>
+      <Cycle>
+        <ClockCycle Name="ClockCycle" Value="Cycle #0" />
+        <ByteA Name="ByteA[7:0]" Value="X" />
+        <ByteB Name="ByteB[7:0]" Value="X" />
+        <ByteC Name="ByteC[7:0]" Value="Cb[7:0]" />
+        <ByteD Name="ByteD[7:0]" Value="CNTL[7:0]" />
+      </Cycle>
+      <Cycle>
+        <ClockCycle Name="ClockCycle" Value="Cycle #1" />
+        <ByteA Name="ByteA[7:0]" Value="X" />
+        <ByteB Name="ByteB[7:0]" Value="X" />
+        <ByteC Name="ByteC[7:0]" Value="Y0[7:0]" />
+        <ByteD Name="ByteD[7:0]" Value="CNTL[7:0]" />
+      </Cycle>
+      <Cycle>
+        <ClockCycle Name="ClockCycle" Value="Cycle #2" />
+        <ByteA Name="ByteA[7:0]" Value="X" />
+        <ByteB Name="ByteB[7:0]" Value="X" />
+        <ByteC Name="ByteC[7:0]" Value="Cr[7:0]" />
+        <ByteD Name="ByteD[7:0]" Value="CNTL[7:0]" />
+      </Cycle>
+      <Cycle>
+        <ClockCycle Name="ClockCycle" Value="Cycle #3" />
+        <ByteA Name="ByteA[7:0]" Value="X" />
+        <ByteB Name="ByteB[7:0]" Value="X" />
+        <ByteC Name="ByteC[7:0]" Value="Y1[7:0]" />
+        <ByteD Name="ByteD[7:0]" Value="CNTL[7:0]" />
+      </Cycle>
+    </Cycles>
+  </VCSSFileFormat>
+</Template>

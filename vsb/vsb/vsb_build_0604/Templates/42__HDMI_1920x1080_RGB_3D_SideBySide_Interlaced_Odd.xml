@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<Template Name="42__HDMI_1920x1080_RGB_3D_SideBySide_Interlaced_Even" Interlacing="OddLinesFirst" CyclesPerPixel="1" IsHDMI="True" Description="">
+	<ColorSpaceConversion>
+		<BitDepth Value="8" />
+		<PixelColorDepth Value="24 bits" />
+		<ColorSpaceFormat Value="BT.709" />
+		<Equations>
+			<Equation Name="Rout">
+				<RCoeff Value="0.8591" />
+				<GCoeff Value="0" />
+				<BCoeff Value="0" />
+				<Scale Value="1" />
+				<Offset Value="16" />
+			</Equation>
+			<Equation Name="Gout">
+				<RCoeff Value="0" />
+				<GCoeff Value="0.8591" />
+				<BCoeff Value="0" />
+				<Scale Value="1" />
+				<Offset Value="16" />
+			</Equation>
+			<Equation Name="Bout">
+				<RCoeff Value="0" />
+				<GCoeff Value="0" />
+				<BCoeff Value="0.8591" />
+				<Scale Value="1" />
+				<Offset Value="16" />
+			</Equation>
+		</Equations>
+	</ColorSpaceConversion>
+	<Syncs>
+		<HDMISyncInfo>
+			<HDMIParameters FrameNumber="Default" VideoIDCode="20" VideoFormat="1920x1080i" PixelRepetionCount="0" CustomVICode="20" PictureAspectRatio="16:9" />
+			<Blanking BlankedLines="22" BlankedPixels="720" />
+			<ActiveVideoSize Width="1920" Height="1080" />
+			<AdditionalDIParameters>
+				<SetAVMute Value="false" />
+				<ClearAVMute Value="false" />
+				<EnableDefaultPhase Value="true" />
+				<HDMIVideoFormat Value="3D Format" />
+				<CustomHDMIVICode Value="0" />
+				<HDMI3DTransmissionFormat Value="Side-by-Side" />
+				<HDMI3DExtData Value="Horizontal sub-sampling" />
+				<BarInfoValid Value="Invalid" />
+				<ScanInfo Value="No Data" />
+				<RGBQuantizationRange Value="Default" />
+				<NonUniformPictureScaling Value="Invalid" />
+				<ContentType Value="No Data" />
+				<ActiveFormatAspectRatio Value="Default" />
+				<YCCQuantizationRange Value="Limited" />
+			</AdditionalDIParameters>
+			<Signal Name="HSync" Type="None">
+				<CntlBit Value="0" />
+				<Sets>
+					<Set LinesNumber="Default" ActivePulse="0" FirstBit="528" LastBit="572" />
+				</Sets>
+			</Signal>
+			<Signal Name="VSync" Type="None">
+				<CntlBit Value="1" />
+				<Sets>
+					<Set LinesNumber="1-4" ActivePulse="0" FirstBit="9999" LastBit="9999" />
+					<Set LinesNumber="5" ActivePulse="0" FirstBit="1848" LastBit="9999" />
+					<Set LinesNumber="6" ActivePulse="0" FirstBit="528" LastBit="9999" />
+					<Set LinesNumber="7-14" ActivePulse="1" FirstBit="9999" LastBit="9999" />
+					<Set LinesNumber="15" ActivePulse="1" FirstBit="1848" LastBit="9999" />
+					<Set LinesNumber="16" ActivePulse="1" FirstBit="528" LastBit="9999" />
+					<Set LinesNumber="17-9999" ActivePulse="0" FirstBit="9999" LastBit="9999" />
+				</Sets>
+			</Signal>
+		</HDMISyncInfo>
+	</Syncs>
+	<VCSSFileFormat>
+		<Cycles>
+			<Cycle>
+				<ClockCycle Name="ClockCycle" Value="Cycle #0" />
+				<ByteA Name="ByteA[7:0]" Value="B[7:0]" />
+				<ByteB Name="ByteB[7:0]" Value="G[7:0]" />
+				<ByteC Name="ByteC[7:0]" Value="R[7:0]" />
+				<ByteD Name="ByteD[7:0]" Value="CNTL[7:0]" />
+			</Cycle>
+		</Cycles>
+	</VCSSFileFormat>
+</Template>

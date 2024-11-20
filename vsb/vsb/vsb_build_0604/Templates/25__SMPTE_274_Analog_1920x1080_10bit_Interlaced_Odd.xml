@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<Template Name="SMPTE 274 Analog_1920x1080_10bit(interlaced_odd)" Interlacing="OddLinesFirst" CyclesPerPixel="1" Description="1080I 60 Hz">
+	<ColorSpaceConversion>
+		<BitDepth Value="10" />
+		<Equations>
+			<Equation Name="Yout">
+				<RCoeff Value="0.2126" />
+				<GCoeff Value="0.7152" />
+				<BCoeff Value="0.0722" />
+				<Scale Value="0.7" />
+				<Offset Value="256" />
+			</Equation>
+			<Equation Name="PRout">
+				<RCoeff Value="0.5" />
+				<GCoeff Value="-0.45415" />
+				<BCoeff Value="-0.04585" />
+				<Scale Value="0.857143" />
+				<Offset Value="512" />
+			</Equation>
+			<Equation Name="PBout">
+				<RCoeff Value="-0.11457" />
+				<GCoeff Value="-0.38543" />
+				<BCoeff Value="0.5" />
+				<Scale Value="0.857143" />
+				<Offset Value="512" />
+			</Equation>
+		</Equations>
+	</ColorSpaceConversion>
+	<Syncs>
+		<EmbeddedAnalog>
+			<SyncHigh Value="768" />
+			<SyncLow Value="16" />
+			<ZeroLevel Value="511" />
+			<HeaderColumns Value="0-219;220;221-279;280-1098;1099;1100-1319;1320;1321-2198;2199" />
+			<Elements>
+				<Element Lines="1-5" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="0,0" ColumnSpan="1" />
+				<Element Lines="1-5" Columns="220" Type="Value" Value="ZeroLevel/2" Offset="0,1" ColumnSpan="1" />
+				<Element Lines="1-5" Columns="221-2198" Type="Value" Value="SyncLow" Offset="0,2" ColumnSpan="2" />
+				<Element Lines="1-5" Columns="1099" Type="Value" Value="ZeroLevel/2" Offset="0,4" ColumnSpan="1" />
+				<Element Lines="6" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="1,0" ColumnSpan="1" />
+				<Element Lines="6" Columns="220-2199" Type="Value" Value="ZeroLevel" Offset="1,1" ColumnSpan="4" />
+				<Element Lines="7-20" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="2,0" ColumnSpan="1" />
+				<Element Lines="7-20" Columns="220-2199" Type="Value" Value="ZeroLevel" Offset="2,1" ColumnSpan="8" />
+				<Element Lines="21-560" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="3,0" ColumnSpan="1" />
+				<Element Lines="21-560" Columns="220-279" Type="Value" Value="ZeroLevel" Offset="3,1" ColumnSpan="2" />
+				<Element Lines="21-560" Columns="280-2199" Type="Video" Value="Field 1" Offset="3,3" ColumnSpan="6" />
+				<Element Lines="561-562" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="4,0" ColumnSpan="1" />
+				<Element Lines="561-562" Columns="220-2199" Type="Value" Value="ZeroLevel" Offset="4,1" ColumnSpan="8" />
+				<Element Lines="563" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="5,0" ColumnSpan="1" />
+				<Element Lines="563" Columns="220-1099" Type="Value" Value="ZeroLevel" Offset="5,1" ColumnSpan="4" />
+				<Element Lines="564-567" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="6,0" ColumnSpan="1" />
+				<Element Lines="564-567" Columns="220" Type="Value" Value="ZeroLevel/2" Offset="6,1" ColumnSpan="1" />
+				<Element Lines="564-567" Columns="221-1098" Type="Value" Value="SyncLow" Offset="6,2" ColumnSpan="2" />
+				<Element Lines="564-567" Columns="1099" Type="Value" Value="ZeroLevel/2" Offset="6,4" ColumnSpan="1" />
+				<Element Lines="568" Columns="0-219" Type="Value" Value="HSyncPulse" Offset="7,0" ColumnSpan="1" />
+				<Element Lines="568" Columns="220" Type="Value" Value="ZeroLevel/2" Offset="7,1" ColumnSpan="1" />
+				<Element Lines="568" Columns="221-1098" Type="Value" Value="SyncLow" Offset="7,2" ColumnSpan="2" />
+				<Element Lines="568" Columns="1099" Type="Value" Value="ZeroLevel/2" Offset="7,4" ColumnSpan="1" />
+				<Element Lines="569-583" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="8,0" ColumnSpan="1" />
+				<Element Lines="569-583" Columns="220-2199" Type="Value" Value="ZeroLevel" Offset="8,1" ColumnSpan="8" />
+				<Element Lines="584-1123" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="9,0" ColumnSpan="1" />
+				<Element Lines="584-1123" Columns="220-279" Type="Value" Value="ZeroLevel" Offset="9,1" ColumnSpan="2" />
+				<Element Lines="584-1123" Columns="280-2199" Type="Video" Value="Field 2" Offset="9,3" ColumnSpan="6" />
+				<Element Lines="1124-1125" Columns="0-219" Type="Pattern" Value="HSyncPulse" Offset="10,0" ColumnSpan="1" />
+				<Element Lines="1124-1125" Columns="220-2199" Type="Value" Value="ZeroLevel" Offset="10,1" ColumnSpan="8" />
+				<Element Lines="1-5" Columns="1100-1319" Type="Pattern" Value="HSyncPulse" Offset="0,5" ColumnSpan="1" />
+				<Element Lines="6" Columns="1100-1319" Type="Pattern" Value="HSyncPulse" Offset="1,5" ColumnSpan="1" />
+				<Element Lines="563" Columns="1100-1319" Type="Pattern" Value="HSyncPulse" Offset="5,5" ColumnSpan="1" />
+				<Element Lines="564-567" Columns="1100-1319" Type="Pattern" Value="HSyncPulse" Offset="6,5" ColumnSpan="1" />
+				<Element Lines="568" Columns="1100-1319" Type="Value" Value="HSyncPulse" Offset="7,5" ColumnSpan="1" />
+				<Element Lines="1-5" Columns="1320" Type="Value" Value="ZeroLevel/2" Offset="0,6" ColumnSpan="1" />
+				<Element Lines="6" Columns="1320-2199" Type="Value" Value="ZeroLevel" Offset="1,6" ColumnSpan="3" />
+				<Element Lines="563" Columns="1320" Type="Value" Value="ZeroLevel/2" Offset="5,6" ColumnSpan="1" />
+				<Element Lines="564-567" Columns="1320" Type="Value" Value="ZeroLevel/2" Offset="6,6" ColumnSpan="1" />
+				<Element Lines="568" Columns="1320-2199" Type="Value" Value="ZeroLevel" Offset="7,6" ColumnSpan="3" />
+				<Element Lines="1-5" Columns="1321-2198" Type="Value" Value="SyncLow" Offset="0,7" ColumnSpan="1" />
+				<Element Lines="563" Columns="1321-2198" Type="Value" Value="SyncLow" Offset="5,7" ColumnSpan="1" />
+				<Element Lines="564-567" Columns="1321-2198" Type="Value" Value="SyncLow" Offset="6,7" ColumnSpan="1" />
+				<Element Lines="1-5" Columns="2199" Type="Value" Value="ZeroLevel/2" Offset="0,8" ColumnSpan="1" />
+				<Element Lines="563" Columns="2199" Type="Value" Value="ZeroLevel/2" Offset="5,8" ColumnSpan="1" />
+				<Element Lines="564-567" Columns="2199" Type="Value" Value="ZeroLevel/2" Offset="6,8" ColumnSpan="1" />
+			</Elements>
+			<HSyncPulse>
+				<Elements>
+					<Element Columns="0-43" Value="ZeroLevel" />
+					<Element Columns="44" Value="ZeroLevel/2" />
+					<Element Columns="45-86" Value="SyncLow" />
+					<Element Columns="87" Value="ZeroLevel/2" />
+					<Element Columns="88" Value="ZeroLevel" />
+					<Element Columns="89" Value="3/2ZeroLevel" />
+					<Element Columns="90-131" Value="SyncHigh" />
+					<Element Columns="132" Value="3/2ZeroLevel" />
+					<Element Columns="133-219" Value="ZeroLevel" />
+				</Elements>
+			</HSyncPulse>
+		</EmbeddedAnalog>
+	</Syncs>
+	<VCSSFileFormat>
+		<Cycles>
+			<Cycle>
+				<ClockCycle Name="ClockCycle" Value="Cycle #0" />
+				<ByteA Name="ByteA[7:0]" Value="Pr[9:2]" />
+				<ByteB Name="ByteB[7:0]" Value="Pb[9:2]" />
+				<ByteC Name="ByteC[7:0]" Value="Y[9:2]" />
+				<ByteD Name="ByteD[7:0]" Value="Y0[1:0],Pb[1:0],Pr[1:0],xx" />
+			</Cycle>
+		</Cycles>
+	</VCSSFileFormat>
+</Template>
