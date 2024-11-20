@@ -92,13 +92,13 @@ void readRgbDataAndCreateImage(const std::string& inputBinFile, const std::strin
 
 int main(int argc, char* argv[]) {
     // 打开输入文件
-	int htotal;  // 输入文件的宽度（列数）
-	int vtotal;  // 输入文件的高度（行数）
-	int start_col;  // 起始列（横坐标）
-	int num_cols;  // 每行要读取的列数（像素数）
-	int start_row;  // 起始行（纵坐标）
-	std::string outputImageFile = "output.bmp";
-	std::string input_file_path = argv[1];
+    int htotal;  // 输入文件的宽度（列数）
+    int vtotal;  // 输入文件的高度（行数）
+    int start_col;  // 起始列（横坐标）
+    int num_cols;  // 每行要读取的列数（像素数）
+    int start_row;  // 起始行（纵坐标）
+    std::string outputImageFile = "output.bmp";
+    std::string input_file_path = argv[1];
     std::ifstream input_file(input_file_path, std::ios::binary);
     if (!input_file) {
         std::cerr << "Failed to open input file." << std::endl;
@@ -147,6 +147,6 @@ int main(int argc, char* argv[]) {
     input_file.close();
     output_file.close();
 
-	readRgbDataAndCreateImage(output_file_path, outputImageFile, hactive, vactive);
+    readRgbDataAndCreateImage(output_file_path, outputImageFile, hactive, vactive);
     return 0;
 }
