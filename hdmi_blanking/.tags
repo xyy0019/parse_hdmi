@@ -1,0 +1,75 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BYTES_PER_BLOCK	gen.c	41;"	d	file:
+DATA_COUNT	gen.c	40;"	d	file:
+SHOWPROCESS	div.c	5;"	d	file:
+START_OFFSET	gen.c	42;"	d	file:
+_PKTINFO_H__	pktinfo.h	2;"	d
+__DIV_H__	div.h	2;"	d
+activeinfo	pktinfo.h	/^			unsigned char activeinfo:1;		\/* A0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+activeinfo	pktinfo.h	/^			unsigned char activeinfo:1;		\/* A0 1 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+additional_colorimetry	pktinfo.h	/^	unsigned char additional_colorimetry;$/;"	m	struct:avi_infoframe_st
+avi_info	pktinfo.c	/^struct avi_infoframe_st avi_info;$/;"	v	typeref:struct:avi_infoframe_st
+avi_infoframe_st	pktinfo.h	/^struct avi_infoframe_st {$/;"	s
+barinfo	pktinfo.h	/^			unsigned char barinfo:2;		\/* B1,B0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+barinfo	pktinfo.h	/^			unsigned char barinfo:2;		\/* B1,B0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+bch_encode_32_24	bch.py	/^def bch_encode_32_24(data: int, generator_poly: int) -> int:$/;"	f
+checksum	bch.py	/^checksum = bch_encode_32_24(data, 0b11100001)$/;"	v
+checksum	pktinfo.h	/^	unsigned char checksum;$/;"	m	struct:avi_infoframe_st
+colorimetry	pktinfo.h	/^			unsigned char colorimetry:2;		\/* C1-C0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+colorimetry	pktinfo.h	/^			unsigned char colorimetry:2;		\/* C1-C0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+colorindicator	pktinfo.h	/^			unsigned char colorindicator:2;		\/* Y1,Y0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+colorindicator	pktinfo.h	/^			unsigned char colorindicator:3;		\/* Y2-Y0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+cont	pktinfo.h	/^	} cont;$/;"	m	struct:avi_infoframe_st	typeref:union:avi_infoframe_st::cont_u
+cont_u	pktinfo.h	/^	union cont_u {$/;"	u	struct:avi_infoframe_st
+content_type	pktinfo.h	/^			unsigned char content_type:2;		\/* CN1-CN0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+crc	div.c	/^void crc()$/;"	f
+crc16	div.c	/^char *crc16(const char *strM, char *fcs)$/;"	f
+data	bch.py	/^data = 0x82020d  # 假设这是一个24位的数据块（实际上在Python中它是一个int，我们可以忽略高位）$/;"	v
+data	gen.c	/^unsigned char data[][4] = {$/;"	v
+data	parse_hdmi.c	/^uint8_t data[32][4] = {$/;"	v
+div	div.c	/^void div()$/;"	f
+ext_color	pktinfo.h	/^			unsigned char ext_color:3;		\/* EC2-EC0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+fmt_ration	pktinfo.h	/^			unsigned char fmt_ration:4;		\/* R3-R0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+fmt_ration	pktinfo.h	/^			unsigned char fmt_ration:4;		\/* R3-R0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+hdmi_parse_avi_info	pktinfo.c	/^void hdmi_parse_avi_info(unsigned int *head, unsigned int *body_low, unsigned int *body_high)$/;"	f
+int_to_binary_string	div.c	/^void int_to_binary_string(unsigned int num, char *binary_str) {$/;"	f
+it_content	pktinfo.h	/^			unsigned char it_content:1;		\/* ITC *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+length	pktinfo.h	/^	unsigned char length;$/;"	m	struct:avi_infoframe_st
+line_num_end_topbar	pktinfo.h	/^	unsigned int line_num_end_topbar:16;	\/*littel endian can use*\/$/;"	m	struct:avi_infoframe_st
+line_num_start_btmbar	pktinfo.h	/^	unsigned int line_num_start_btmbar:16;$/;"	m	struct:avi_infoframe_st
+main	gen.c	/^int main() {$/;"	f
+main	parse_hdmi.c	/^int main() {$/;"	f
+pic_ration	pktinfo.h	/^			unsigned char pic_ration:2;		\/* M1-M0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+pic_ration	pktinfo.h	/^			unsigned char pic_ration:2;		\/* M1-M0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+pic_scaling	pktinfo.h	/^			unsigned char pic_scaling:2;		\/* SC1-SC0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+pic_scaling	pktinfo.h	/^			unsigned char pic_scaling:2;		\/* SC1-SC0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+pix_num_left_bar	pktinfo.h	/^	unsigned int pix_num_left_bar:16;$/;"	m	struct:avi_infoframe_st
+pix_num_right_bar	pktinfo.h	/^	unsigned int pix_num_right_bar:16;$/;"	m	struct:avi_infoframe_st
+pix_repeat	pktinfo.h	/^			unsigned char pix_repeat:4;		\/* PR3-PR0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+pkttype	pktinfo.h	/^	unsigned char pkttype;$/;"	m	struct:avi_infoframe_st
+qt_range	pktinfo.h	/^			unsigned char qt_range:2;		\/* Q1-Q0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+repeat	div.c	/^void repeat(char c, int n)$/;"	f
+rev0	pktinfo.h	/^			unsigned char rev0:1;$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+rev1	pktinfo.h	/^			unsigned char rev1:6;$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+rev2	pktinfo.h	/^			unsigned char rev2:8;$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+rev3	pktinfo.h	/^			unsigned char rev3:8;$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+reverse_byte	parse_hdmi.c	/^uint8_t reverse_byte(uint8_t byte) {$/;"	f
+reverse_bytes_in_32bit	parse_hdmi.c	/^uint32_t reverse_bytes_in_32bit(uint32_t num) {$/;"	f
+scaninfo	pktinfo.h	/^			unsigned char scaninfo:2;		\/* S1,S0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v1_st
+scaninfo	pktinfo.h	/^			unsigned char scaninfo:2;		\/* S1,S0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+std	div.c	/^using namespace std;$/;"	v
+strlmv	div.c	/^char* strlmv(char *s)$/;"	f
+strm2div	div.c	/^void strm2div(const char *strM, const char *strP, char *strQ, char *strR)$/;"	f
+strxor	div.c	/^char* strxor(char *result, const char *s1, const char *s2)$/;"	f
+v1	pktinfo.h	/^		} v1;$/;"	m	union:avi_infoframe_st::cont_u	typeref:struct:avi_infoframe_st::cont_u::v1_st
+v1_st	pktinfo.h	/^		struct v1_st {$/;"	s	union:avi_infoframe_st::cont_u
+v4	pktinfo.h	/^		} v4;$/;"	m	union:avi_infoframe_st::cont_u	typeref:struct:avi_infoframe_st::cont_u::v4_st
+v4_st	pktinfo.h	/^		struct v4_st { \/* v2=v3=v4 *\/$/;"	s	union:avi_infoframe_st::cont_u
+version	pktinfo.h	/^	unsigned char version;$/;"	m	struct:avi_infoframe_st
+vic	pktinfo.h	/^			unsigned char vic:8;			\/* VIC7-VIC0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
+ycc_range	pktinfo.h	/^			unsigned char ycc_range:2;		\/* YQ1-YQ0 *\/$/;"	m	struct:avi_infoframe_st::cont_u::v4_st
