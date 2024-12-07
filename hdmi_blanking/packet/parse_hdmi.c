@@ -119,7 +119,7 @@ void hdmi_parse_packet(uint8_t (*data)[4])
 	hdmi_parse_pkt_info(&head, &body_low32, &body_high32);
 }
 
-int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive, int *vtotal, int *vactive)
+int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive, int *vtotal, int *vactive, long *offset)
 {
 	FILE *file = fopen(input_file, "rb");
 	if (!file) {
@@ -140,7 +140,6 @@ int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive
 	int pattern_count = 0; // Counter for the search pattern occurrences
 	int hactive_count = 0;
 	int hblank_count = 0;
-	long offset;
 	bool first = true;
 	while (1) {
 		size_t bytes_read = fread(buffer, 1, 4, file);
@@ -197,7 +196,7 @@ int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive
 		}
 		if (memcmp(buffer, video_search_pattern, 1) == 0) {
 			if (first) {
-				offset = ftell(file);
+				*offset = ftell(file) - 4;
 				first = false;
 			}
 			hactive_detect = 1;
@@ -227,13 +226,14 @@ int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive
 	*htotal = h_b_cnt + h_cnt;
 	*vtotal = frame_pixel / *htotal / 4;
 	*hactive = h_cnt;
-	int vblank = offset / 4 / *htotal;
+	int vblank = *offset / 4 / *htotal;
 	*vactive = *vtotal - vblank;
 	printf("frame_pixel = %ld\n", frame_pixel);
  	printf("hactive = %d\n", h_cnt);
 	printf("hblank = %d\n", h_b_cnt);
 	printf("vactive = %d\n", *vactive);
 	printf("vblank = %d\n", vblank);
+	printf("offset = %ld\n", *offset);
 	fclose(file);
 	return 0;
 }
@@ -286,14 +286,77 @@ int hdmi_generate_bmpfile(char *filename, int *htotal, int *vtotal, int *hactive
 	return 0;
 }
 
+void copy_file(const char *src, const char *dst) {
+    FILE *src_file = fopen(src, "rb");
+    if (src_file == NULL) {
+        perror("无法打开源文件");
+        exit(EXIT_FAILURE);
+    }
+ 
+    FILE *dst_file = fopen(dst, "wb");
+    if (dst_file == NULL) {
+        perror("无法打开目标文件");
+        fclose(src_file);
+        exit(EXIT_FAILURE);
+    }
+ 
+    char buffer[1024];
+    size_t bytes;
+ 
+    // 从源文件读取数据并写入到目标文件
+    while ((bytes = fread(buffer, 1, sizeof(buffer), src_file)) > 0) {
+        fwrite(buffer, 1, bytes, dst_file);
+    }
+ 
+    fclose(src_file);
+    fclose(dst_file);
+    printf("文件已成功拷贝到 %s\n", dst);
+}
+
+int hdmi_replace(char *filename, char *rgbfile, int *htotal, int *vtotal, int *hactive, int *vactive, long *offset)
+{
+	printf("offset = %ld\n", *offset);
+	FILE *raw_file = fopen(filename, "rb+");
+    if (!raw_file) {
+        perror("Error opening input file");
+        return -1;
+    }
+	FILE *rgb_file = fopen(rgbfile, "rb");
+    if (!rgb_file) {
+        perror("Error opening input file");
+        return -1;
+    }
+	unsigned char *input_buffer = (unsigned char *)malloc(*hactive * 3);
+	unsigned char *output_buffer = (unsigned char *)malloc(*hactive * 4);
+
+	for (int j = 0; j < *vactive; j++) {
+		memset(input_buffer, 0, sizeof(input_buffer));
+		memset(input_buffer, 0, sizeof(output_buffer));
+		size_t bytes_read = fread(input_buffer, 1, *hactive * 3, rgb_file);
+		for (int i = 0; i < *hactive; ++i) {
+    	    output_buffer[i * 4] = 0xc0; // 添加0xc0字节
+        	memcpy(output_buffer + i * 4 + 1, input_buffer + i * 3, 3); // 复制3字节数据
+    	}
+		fseek(raw_file, (*offset) + j * (*htotal * 4), SEEK_SET);
+		fwrite(output_buffer, 1, *hactive * 4, raw_file);
+	}
+
+	fclose(raw_file);
+    fclose(rgb_file);
+    free(input_buffer);
+    free(output_buffer);
+	return 0;
+}
+
 int hdmi_parse(char *input_file) {
 	int htotal;
 	int hactive;
 	int vtotal;
 	int vactive;
+	long offset;
 	int ret;
 
-	ret = hdmi_parse_blank_packet_and_fdet(input_file, &htotal, &hactive, &vtotal, &vactive);
+	ret = hdmi_parse_blank_packet_and_fdet(input_file, &htotal, &hactive, &vtotal, &vactive, &offset);
 	if (ret == -1) {
 		std::cerr << "Failed to parse blank." << std::endl;
 		return -1;
@@ -303,5 +366,24 @@ int hdmi_parse(char *input_file) {
 		std::cerr << "Failed to gen bmpfile." << std::endl;
 		return -1;
 	}
+	return 0;
+}
+
+int hdmi_encode(char *filename, char *rgbfile, char *outputfile)
+{
+	int htotal;
+	int hactive;
+	int vtotal;
+	int vactive;
+	long offset;
+	int ret;
+
+	ret = hdmi_parse_blank_packet_and_fdet(filename, &htotal, &hactive, &vtotal, &vactive, &offset);
+	if (ret == -1) {
+		std::cerr << "Failed to parse blank." << std::endl;
+		return -1;
+	}
+	copy_file(filename, outputfile);
+	hdmi_replace(outputfile, rgbfile, &htotal, &vtotal, &hactive, &vactive, &offset);
 	return 0;
 }
