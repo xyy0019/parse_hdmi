@@ -1,5 +1,7 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include "parse_hdmi.h"
+#define SHOW
 int main(int argc, char *argv[]) {
 	if (argc < 2) {
 		fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
@@ -11,6 +13,9 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "fail to parse hdmi\n");
 		return -1;
 	}
+#ifdef SHOW
+    system("python3 show.py");
+#endif
 	return 0;
 }
 
