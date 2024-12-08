@@ -30,5 +30,7 @@ struct BMPInfoHeader {
 #pragma pack(pop)
 
 void readRgbDataAndCreateImage(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height);
+void create_bmp_from_file(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive);
+
 
 #endif

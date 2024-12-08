@@ -124,6 +124,7 @@ struct gcp_pkt_st {
 	} sbpkt;
 };
 
+extern struct gcp_pkt_st gcp_info;
 void hdmi_parse_pkt_info(unsigned int *head, unsigned int *body_low, unsigned int *body_high);
 void hdmi_gcp_info(unsigned int *head, unsigned int *body_low, unsigned int *body_high);
 

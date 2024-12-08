@@ -229,7 +229,7 @@ int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive
 	int vblank = *offset / 4 / *htotal;
 	*vactive = *vtotal - vblank;
 	printf("frame_pixel = %ld\n", frame_pixel);
- 	printf("hactive = %d\n", h_cnt);
+ 	printf("hcnt = %d colordepth = %d\n", h_cnt, gcp_info.sbpkt.colordepth);
 	printf("hblank = %d\n", h_b_cnt);
 	printf("vactive = %d\n", *vactive);
 	printf("vblank = %d\n", vblank);
@@ -282,7 +282,11 @@ int hdmi_generate_bmpfile(char *filename, int *htotal, int *vtotal, int *hactive
 	input_file.close();
 	output_file.close();
 
-	readRgbDataAndCreateImage(output_file_path, outputImageFile, *hactive, *vactive);
+	printf("gcp colordepth %d\n", gcp_info.sbpkt.colordepth);
+	if (gcp_info.sbpkt.colordepth == 4)
+		readRgbDataAndCreateImage(output_file_path, outputImageFile, *hactive, *vactive);
+	else if (gcp_info.sbpkt.colordepth == 5)
+		create_bmp_from_file(output_file_path, outputImageFile, *hactive / 10 * 8, *vactive);
 	return 0;
 }
 
