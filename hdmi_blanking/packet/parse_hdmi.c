@@ -26,16 +26,6 @@ bool compare_bytes(const uint8_t *bytes1, const uint8_t *bytes2, size_t size) {
 }
 
 
-uint8_t reverse_byte(uint8_t byte) {
-	uint8_t reversed = 0;
-	for (int i = 0; i < 8; i++) {
-		reversed <<= 1;
-		reversed |= (byte & 1);
-		byte >>= 1;
-	}
-	return reversed;
-}
-
 uint32_t reverse_bytes_in_32bit(uint32_t num) {
 	uint32_t reversed = 0;
 	for (int i = 0; i < 4; i++) {
@@ -284,9 +274,11 @@ int hdmi_generate_bmpfile(char *filename, int *htotal, int *vtotal, int *hactive
 
 	printf("gcp colordepth %d\n", gcp_info.sbpkt.colordepth);
 	if (gcp_info.sbpkt.colordepth == 4)
-		readRgbDataAndCreateImage(output_file_path, outputImageFile, *hactive, *vactive);
+		hdmi_create_bmp_from_8bit_data(output_file_path, outputImageFile, *hactive, *vactive);
 	else if (gcp_info.sbpkt.colordepth == 5)
-		create_bmp_from_file(output_file_path, outputImageFile, *hactive / 10 * 8, *vactive);
+		hdmi_create_bmp_from_10bit_data(output_file_path, outputImageFile, *hactive / 10 * 8, *vactive);
+	else if (gcp_info.sbpkt.colordepth == 6)
+		hdmi_create_bmp_from_12bit_data(output_file_path, outputImageFile, *hactive / 12 * 8, *vactive);
 	return 0;
 }
 

@@ -29,8 +29,11 @@ struct BMPInfoHeader {
 };
 #pragma pack(pop)
 
-void readRgbDataAndCreateImage(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height);
-void create_bmp_from_file(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive);
+void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height);
+void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive);
+void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive);
+uint8_t reverse_byte(uint8_t byte);
+
 
 
 #endif
