@@ -274,11 +274,11 @@ int hdmi_generate_bmpfile(char *filename, int *htotal, int *vtotal, int *hactive
 
 	printf("gcp colordepth %d\n", gcp_info.sbpkt.colordepth);
 	if (gcp_info.sbpkt.colordepth == 4)
-		hdmi_create_bmp_from_8bit_data(output_file_path, outputImageFile, *hactive, *vactive);
+		hdmi_create_bmp_from_8bit_data(output_file_path, outputImageFile, *hactive, *vactive, avi_info.cont.v4.colorindicator);
 	else if (gcp_info.sbpkt.colordepth == 5)
-		hdmi_create_bmp_from_10bit_data(output_file_path, outputImageFile, *hactive / 10 * 8, *vactive);
+		hdmi_create_bmp_from_10bit_data(output_file_path, outputImageFile, *hactive / 10 * 8, *vactive, avi_info.cont.v4.colorindicator);
 	else if (gcp_info.sbpkt.colordepth == 6)
-		hdmi_create_bmp_from_12bit_data(output_file_path, outputImageFile, *hactive / 12 * 8, *vactive);
+		hdmi_create_bmp_from_12bit_data(output_file_path, outputImageFile, *hactive / 12 * 8, *vactive, avi_info.cont.v4.colorindicator);
 	return 0;
 }
 

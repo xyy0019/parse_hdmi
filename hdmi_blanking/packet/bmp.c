@@ -18,8 +18,13 @@ uint64_t byte_64(uint8_t byte) {
 	return byte;
 }
 
+template<typename T>
+constexpr T clamp(T value, T low, T high) {
+    return (value < low) ? low : (value > high) ? high : value;
+}
+
 // 转换20字节缓冲区为4个像素的函数
-std::vector<uint8_t> process_buffer_10(const uint8_t* buffer) {
+std::vector<uint8_t> process_buffer_10(const uint8_t* buffer, int colorspace) {
     std::vector<uint8_t> pixels(12); // 每个像素3个字节（R, G, B），共4个像素
 
     uint64_t r = byte_64(buffer[1]) << 0 |
@@ -52,26 +57,93 @@ std::vector<uint8_t> process_buffer_10(const uint8_t* buffer) {
 	uint16_t b3 = ((b >> 10) & 0x3ff) >> 2;
 	uint16_t b4 = (b & 0x3ff) >> 2;
     // 将R、G、B值放入像素数组中
-    pixels[0] = b1;
-    pixels[1] = g1;
-    pixels[2] = r1;
+    if (colorspace == 0) {
+    	pixels[0] = b1;
+   		pixels[1] = g1;
+    	pixels[2] = r1;
 
-	pixels[3] = b2;
-    pixels[4] = g2;
-    pixels[5] = r2;
+		pixels[3] = b2;
+    	pixels[4] = g2;
+    	pixels[5] = r2;
 
-	pixels[6] = b3;
-    pixels[7] = g3;
-    pixels[8] = r3;
+		pixels[6] = b3;
+    	pixels[7] = g3;
+    	pixels[8] = r3;
 
-	pixels[9] = b4;
-    pixels[10] = g4;
-    pixels[11] = r4;
+		pixels[9] = b4;
+    	pixels[10] = g4;
+    	pixels[11] = r4;
+	} else {
+		int y1 = g1;
+		int u1 = b1;
+		int v1 = r1;
+		int y2 = g2;
+		int u2 = b2;
+		int v2 = r2;
+		int y3 = g3;
+		int u3 = b3;
+		int v3 = r3;
+		int y4 = g4;
+		int u4 = b4;
+		int v4 = r4;
+
+		int R1 = static_cast<int>(y1 + 1.402 * (v1- 128));
+        int G1 = static_cast<int>(y1 - 0.344136 * (u1 - 128) - 0.714136 * (v1 - 128));
+        int B1 = static_cast<int>(y1 + 1.772 * (u1 - 128));
+ 
+        // 将结果限制在0-255范围内
+        R1 = clamp(R1, 0, 255);
+        G1 = clamp(G1, 0, 255);
+        B1 = clamp(B1, 0, 255);
+
+		int R2 = static_cast<int>(y2 + 1.402 * (v2- 128));
+        int G2 = static_cast<int>(y2 - 0.344136 * (u2 - 128) - 0.714136 * (v2 - 128));
+        int B2 = static_cast<int>(y2 + 1.772 * (u2 - 128));
+ 
+        // 将结果限制在0-255范围内
+        R2 = clamp(R2, 0, 255);
+        G2 = clamp(G2, 0, 255);
+        B2 = clamp(B2, 0, 255);
+
+		int R3 = static_cast<int>(y3 + 1.402 * (v3- 128));
+        int G3 = static_cast<int>(y3 - 0.344136 * (u3 - 128) - 0.714136 * (v3 - 128));
+        int B3 = static_cast<int>(y3 + 1.772 * (u3 - 128));
+ 
+        // 将结果限制在0-255范围内
+        R3 = clamp(R3, 0, 255);
+        G3 = clamp(G3, 0, 255);
+        B3 = clamp(B3, 0, 255);
+
+		int R4 = static_cast<int>(y4 + 1.402 * (v4- 128));
+        int G4 = static_cast<int>(y4 - 0.344136 * (u4 - 128) - 0.714136 * (v4 - 128));
+        int B4 = static_cast<int>(y4 + 1.772 * (u4 - 128));
+ 
+        // 将结果限制在0-255范围内
+        R4 = clamp(R3, 0, 255);
+        G4 = clamp(G3, 0, 255);
+        B4 = clamp(B3, 0, 255);
+
+		pixels[0] = B1;
+   		pixels[1] = G1;
+    	pixels[2] = R1;
+
+		pixels[3] = B2;
+    	pixels[4] = G2;
+    	pixels[5] = R2;
+
+		pixels[6] = B3;
+    	pixels[7] = G3;
+    	pixels[8] = R3;
+
+		pixels[9] = B4;
+    	pixels[10] = G4;
+    	pixels[11] = R4;
+	}
     return pixels;
 }
 
 // 转换20字节缓冲区为4个像素的函数
-std::vector<uint8_t> process_buffer_12(const uint8_t* buffer) {
+std::vector<uint8_t> process_buffer_12(const uint8_t* buffer, int colorspace) {
     std::vector<uint8_t> pixels(6);
     // 提取R、G、B分量
         // 注意：这里我们实际上只使用了每个颜色通道的前8位，忽略了低2位
@@ -105,19 +177,54 @@ std::vector<uint8_t> process_buffer_12(const uint8_t* buffer) {
 	b2 = uint8_t(b2 & 0xff);
 	b2 = reverse_byte(b2);
     // 将R、G、B值放入像素数组中
-    pixels[0] = b1;
-    pixels[1] = g1;
-    pixels[2] = r1;
+    if (colorspace == 0) {
+    	pixels[0] = b1;
+    	pixels[1] = g1;
+    	pixels[2] = r1;
 
-	pixels[3] = b2;
-    pixels[4] = g2;
-    pixels[5] = r2;
+		pixels[3] = b2;
+    	pixels[4] = g2;
+    	pixels[5] = r2;
+    } else {
+		int y1 = g1;
+		int u1 = b1;
+		int v1 = r1;
+		int y2 = g2;
+		int u2 = b2;
+		int v2 = r2;
+
+		int R1 = static_cast<int>(y1 + 1.402 * (v1- 128));
+        int G1 = static_cast<int>(y1 - 0.344136 * (u1 - 128) - 0.714136 * (v1 - 128));
+        int B1 = static_cast<int>(y1 + 1.772 * (u1 - 128));
+ 
+        // 将结果限制在0-255范围内
+        R1 = clamp(R1, 0, 255);
+        G1 = clamp(G1, 0, 255);
+        B1 = clamp(B1, 0, 255);
+
+		int R2 = static_cast<int>(y2 + 1.402 * (v2- 128));
+        int G2 = static_cast<int>(y2 - 0.344136 * (u2 - 128) - 0.714136 * (v2 - 128));
+        int B2 = static_cast<int>(y2 + 1.772 * (u2 - 128));
+ 
+        // 将结果限制在0-255范围内
+        R2 = clamp(R2, 0, 255);
+        G2 = clamp(G2, 0, 255);
+        B2 = clamp(B2, 0, 255);
+
+		pixels[0] = B1;
+   		pixels[1] = G1;
+    	pixels[2] = R1;
+
+		pixels[3] = B2;
+    	pixels[4] = G2;
+    	pixels[5] = R2;
+    }
 
     return pixels;
 }
 
 // 创建BMP文件的函数
-void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive) {
+void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive, int colorspace) {
     std::ifstream infile(inputBinFile, std::ios::binary);
     if (!infile) {
         std::cerr << "Error opening input file!" << std::endl;
@@ -129,7 +236,7 @@ void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std:
  
     // 读取文件并处理缓冲区
     while (infile.read(reinterpret_cast<char*>(buffer), sizeof(buffer))) {
-        std::vector<uint8_t> pixels = process_buffer_12(buffer);
+        std::vector<uint8_t> pixels = process_buffer_12(buffer, colorspace);
         pixel_data.insert(pixel_data.end(), pixels.begin(), pixels.end());
     }
  
@@ -181,7 +288,7 @@ void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std:
 }
 
 // 创建BMP文件的函数
-void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive) {
+void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive, int colorspace) {
     std::ifstream infile(inputBinFile, std::ios::binary);
     if (!infile) {
         std::cerr << "Error opening input file!" << std::endl;
@@ -193,7 +300,7 @@ void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std:
  
     // 读取文件并处理缓冲区
     while (infile.read(reinterpret_cast<char*>(buffer), sizeof(buffer))) {
-        std::vector<uint8_t> pixels = process_buffer_10(buffer);
+        std::vector<uint8_t> pixels = process_buffer_10(buffer, colorspace);
         pixel_data.insert(pixel_data.end(), pixels.begin(), pixels.end());
     }
  
@@ -244,7 +351,7 @@ void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std:
     outfile.close();
 }
 
-void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height) {
+void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height, int colorspace) {
 	std::ifstream binFile(inputBinFile, std::ios::binary);
 	if (!binFile.is_open()) {
 		std::cerr << "Error: The file '" << inputBinFile << "' could not be opened." << std::endl;
@@ -252,18 +359,73 @@ void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::
 	}
  
 	std::vector<uint8_t> bgrData(width * height * 3);
- 
+ 	printf("width = %d\n", width);
 	for (int y = height - 1; y >= 0; --y) {
 		std::vector<uint8_t> rowBuffer(width * 4);
 		if (!binFile.read(reinterpret_cast<char*>(rowBuffer.data()), rowBuffer.size())) {
 			std::cerr << "Error: Not enough data in '" << inputBinFile << "' to fill the image." << std::endl;
 			return;
 		}
+		for (int x = 0; x < width;) {
+			if (colorspace == 4) {
+				bgrData[(y * width + x) * 3 + 0] = rowBuffer[(x * 4 + 3)]; // B
+				bgrData[(y * width + x) * 3 + 1] = rowBuffer[(x * 4 + 2)]; // G
+				bgrData[(y * width + x) * 3 + 2] = rowBuffer[(x * 4 + 1)]; // R
+				++x;
+			} else if (colorspace == 2) {
+            	uint8_t Y = rowBuffer[x * 4 + 2];
+           		uint8_t U = rowBuffer[x * 4 + 3];
+            	uint8_t V = rowBuffer[x * 4 + 1];
  
-		for (int x = 0; x < width; ++x) {
-			bgrData[(y * width + x) * 3 + 0] = rowBuffer[(x * 4 + 3)]; // B
-			bgrData[(y * width + x) * 3 + 1] = rowBuffer[(x * 4 + 2)]; // G
-			bgrData[(y * width + x) * 3 + 2] = rowBuffer[(x * 4 + 1)]; // R
+            	// YUV到RGB的转换公式
+            	int R = static_cast<int>(Y + 1.402 * (V - 128));
+            	int G = static_cast<int>(Y - 0.344136 * (U - 128) - 0.714136 * (V - 128));
+            	int B = static_cast<int>(Y + 1.772 * (U - 128));
+ 
+            	// 将结果限制在0-255范围内
+            	R = clamp(R, 0, 255);
+            	G = clamp(G, 0, 255);
+            	B = clamp(B, 0, 255);
+ 
+            	// 将RGB值存储到rgbData中
+            	int rgbIndex = (y * width + x) * 3;
+            	bgrData[rgbIndex] = static_cast<uint8_t>(B); // B
+            	bgrData[rgbIndex + 1] = static_cast<uint8_t>(G); // G
+            	bgrData[rgbIndex + 2] = static_cast<uint8_t>(R); //
+            	++x;
+			}else if (colorspace == 1) {
+				uint16_t Y1 = (rowBuffer[x * 4 + 2] << 4) | (rowBuffer[x * 4 + 3] & 0xf);
+           		uint16_t Cb = (rowBuffer[x * 4 + 1] << 4) | (rowBuffer[x * 4 + 3] >> 4);
+				uint16_t Y2 = (rowBuffer[x * 4 + 6] << 4) | (rowBuffer[x * 4 + 7] & 0xf);
+           		uint16_t Cr = (rowBuffer[x * 4 + 5] << 4) | (rowBuffer[x * 4 + 7] >> 4);
+				int y1 = Y1 >> 4;
+				int u1 = Cb >> 4;
+				int v1 = Cr >> 4;
+				int y2 = Y2 >> 4;
+				int u2 = Cb >> 4;
+				int v2 = Cr >> 4;
+
+				int R1 = static_cast<int>(y1 + 1.402 * (v1 - 128));
+            	int G1 = static_cast<int>(y1 - 0.344136 * (u1 - 128) - 0.714136 * (v1 - 128));
+            	int B1 = static_cast<int>(y1 + 1.772 * (u1 - 128));;
+				R1 = clamp(R1, 0, 255);
+            	G1 = clamp(G1, 0, 255);
+            	B1 = clamp(B1, 0, 255);
+				int R2 = static_cast<int>(y2 + 1.402 * (v2 - 128));
+            	int G2 = static_cast<int>(y2 - 0.344136 * (u2 - 128) - 0.714136 * (v2 - 128));
+            	int B2 = static_cast<int>(y2 + 1.772 * (u2 - 128));
+				R2 = clamp(R2, 0, 255);
+            	G2 = clamp(G2, 0, 255);
+            	B2 = clamp(B2, 0, 255);
+				int rgbIndex = (y * width + x) * 3;
+				bgrData[rgbIndex] = static_cast<uint8_t>(B1);
+            	bgrData[rgbIndex + 1] = static_cast<uint8_t>(G1);
+            	bgrData[rgbIndex + 2] = static_cast<uint8_t>(R1); 
+            	bgrData[rgbIndex + 3] = static_cast<uint8_t>(B2);
+            	bgrData[rgbIndex + 4] = static_cast<uint8_t>(G2);
+            	bgrData[rgbIndex + 5] = static_cast<uint8_t>(R2);
+				x = x + 2;
+			}
 		}
 	}
 	binFile.close();

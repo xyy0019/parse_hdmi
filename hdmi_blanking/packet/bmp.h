@@ -29,9 +29,9 @@ struct BMPInfoHeader {
 };
 #pragma pack(pop)
 
-void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height);
-void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive);
-void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive);
+void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height, int colorspace);
+void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive, int colorspace);
+void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive, int colorspace);
 uint8_t reverse_byte(uint8_t byte);
 
 

@@ -27,6 +27,7 @@ void hdmi_avi_info(unsigned int *head, unsigned int *body_low, unsigned int *bod
 	printf("scaninfo = 0x%x\n", avi_info.cont.v4.scaninfo);
 	printf("barinfo = 0x%x\n", avi_info.cont.v4.barinfo);
 	printf("activeinfo = 0x%x\n", avi_info.cont.v4.activeinfo);
+	printf("colorindicator = 0x%x\n", avi_info.cont.v4.colorindicator);
 	printf("fmt_ration = 0x%x\n", avi_info.cont.v4.fmt_ration);
 	printf("pic_ration = 0x%x\n", avi_info.cont.v4.pic_ration);
 	printf("colorimetry = 0x%x\n", avi_info.cont.v4.colorimetry);
