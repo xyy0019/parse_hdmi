@@ -18,7 +18,8 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 #ifdef SHOW
-    system("python3 show.py");
+	if (select == 0)
+    	system("python3 show.py");
 #endif
 	return 0;
 }

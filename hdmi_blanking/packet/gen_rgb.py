@@ -33,6 +33,6 @@ def extract_rgb_interleaved(image_path, output_bin_path):
         print(f"RGB交织数据已写入 {output_bin_path}")
 
 # 示例用法
-image_path = 'test.jpg'  # 输入的JPEG图像路径
+image_path = 'test1.jpg'  # 输入的JPEG图像路径
 output_bin_path = 'output.bin'  # 输出的二进制文件路径
 extract_rgb_interleaved(image_path, output_bin_path)

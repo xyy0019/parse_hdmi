@@ -289,13 +289,13 @@ int hdmi_generate_bmpfile(char *filename, int *htotal, int *vtotal, int *hactive
 void copy_file(const char *src, const char *dst) {
     FILE *src_file = fopen(src, "rb");
     if (src_file == NULL) {
-        perror("无法打开源文件");
+        perror("fail to open src file");
         exit(EXIT_FAILURE);
     }
  
     FILE *dst_file = fopen(dst, "wb");
     if (dst_file == NULL) {
-        perror("无法打开目标文件");
+        perror("fail to open dst file");
         fclose(src_file);
         exit(EXIT_FAILURE);
     }
@@ -310,12 +310,11 @@ void copy_file(const char *src, const char *dst) {
  
     fclose(src_file);
     fclose(dst_file);
-    printf("文件已成功拷贝到 %s\n", dst);
+    printf("raw file has been generatred success %s\n", dst);
 }
 
 int hdmi_replace(char *filename, char *rgbfile, int *htotal, int *vtotal, int *hactive, int *vactive, long *offset)
 {
-	printf("offset = %ld\n", *offset);
 	FILE *raw_file = fopen(filename, "rb+");
     if (!raw_file) {
         perror("Error opening input file");
@@ -345,6 +344,7 @@ int hdmi_replace(char *filename, char *rgbfile, int *htotal, int *vtotal, int *h
     fclose(rgb_file);
     free(input_buffer);
     free(output_buffer);
+	printf("A frame has been generatred success %s\n", filename);
 	return 0;
 }
 
