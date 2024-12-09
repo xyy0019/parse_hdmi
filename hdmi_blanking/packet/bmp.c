@@ -234,16 +234,13 @@ void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std:
     std::vector<uint8_t> pixel_data;
     uint8_t buffer[12];
  
-    // 读取文件并处理缓冲区
     while (infile.read(reinterpret_cast<char*>(buffer), sizeof(buffer))) {
         std::vector<uint8_t> pixels = process_buffer_12(buffer, colorspace);
         pixel_data.insert(pixel_data.end(), pixels.begin(), pixels.end());
     }
  
-    // 确保文件已正确关闭
     infile.close();
  
-    // 设置BMP文件头和信息头
     BMPFileHeader fileHeader;
     BMPInfoHeader infoHeader;
     memset(&fileHeader, 0, sizeof(fileHeader));
@@ -251,17 +248,15 @@ void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std:
  
     fileHeader.bfType = 0x4D42; // "BM"
     infoHeader.biSize = sizeof(infoHeader);
-    infoHeader.biWidth = hactive; // 假设每个像素一行，但您可以根据需要调整宽度
-    infoHeader.biHeight = vactive; // 高度为像素数除以3（每个像素3个字节）
+    infoHeader.biWidth = hactive;
+    infoHeader.biHeight = vactive;
     infoHeader.biPlanes = 1;
-    infoHeader.biBitCount = 24; // 每个像素24位（R, G, B各8位）
-    infoHeader.biSizeImage = pixel_data.size(); // 图像数据大小
+    infoHeader.biBitCount = 24;
+    infoHeader.biSizeImage = pixel_data.size();
  
-    // 计算文件大小（文件头 + 信息头 + 图像数据）
     fileHeader.bfSize = sizeof(fileHeader) + sizeof(infoHeader) + infoHeader.biSizeImage;
     fileHeader.bfOffBits = sizeof(fileHeader) + sizeof(infoHeader);
  
-    // 打开输出文件并写入BMP头和数据
     std::ofstream outfile(outputBmpFile, std::ios::binary);
     if (!outfile) {
         std::cerr << "Error opening output file!" << std::endl;
@@ -269,11 +264,9 @@ void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std:
     }
 
 	int row_size = (infoHeader.biWidth * 3 + 3) & ~3;
- 
-    // 创建一个新的数组来存储翻转后的像素数据
+
     std::vector<uint8_t> flipped_pixel_data(pixel_data.size());
  
-    // 复制并翻转像素数据
     for (int y = 0; y < infoHeader.biHeight; ++y) {
         int source_index = (infoHeader.biHeight - 1 - y) * row_size;
         int dest_index = y * row_size;
@@ -283,11 +276,9 @@ void hdmi_create_bmp_from_12bit_data(const std::string& inputBinFile, const std:
     outfile.write(reinterpret_cast<const char*>(&infoHeader), sizeof(infoHeader));
     outfile.write(reinterpret_cast<const char*>(flipped_pixel_data.data()), pixel_data.size());
  
-    // 确保文件已正确关闭
     outfile.close();
 }
 
-// 创建BMP文件的函数
 void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int hactive, int vactive, int colorspace) {
     std::ifstream infile(inputBinFile, std::ios::binary);
     if (!infile) {
@@ -298,16 +289,13 @@ void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std:
     std::vector<uint8_t> pixel_data;
     uint8_t buffer[20];
  
-    // 读取文件并处理缓冲区
     while (infile.read(reinterpret_cast<char*>(buffer), sizeof(buffer))) {
         std::vector<uint8_t> pixels = process_buffer_10(buffer, colorspace);
         pixel_data.insert(pixel_data.end(), pixels.begin(), pixels.end());
     }
  
-    // 确保文件已正确关闭
     infile.close();
  
-    // 设置BMP文件头和信息头
     BMPFileHeader fileHeader;
     BMPInfoHeader infoHeader;
     memset(&fileHeader, 0, sizeof(fileHeader));
@@ -315,17 +303,15 @@ void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std:
  
     fileHeader.bfType = 0x4D42; // "BM"
     infoHeader.biSize = sizeof(infoHeader);
-    infoHeader.biWidth = hactive; // 假设每个像素一行，但您可以根据需要调整宽度
-    infoHeader.biHeight = vactive; // 高度为像素数除以3（每个像素3个字节）
+    infoHeader.biWidth = hactive;
+    infoHeader.biHeight = vactive;
     infoHeader.biPlanes = 1;
-    infoHeader.biBitCount = 24; // 每个像素24位（R, G, B各8位）
-    infoHeader.biSizeImage = pixel_data.size(); // 图像数据大小
+    infoHeader.biBitCount = 24;
+    infoHeader.biSizeImage = pixel_data.size();
  
-    // 计算文件大小（文件头 + 信息头 + 图像数据）
     fileHeader.bfSize = sizeof(fileHeader) + sizeof(infoHeader) + infoHeader.biSizeImage;
     fileHeader.bfOffBits = sizeof(fileHeader) + sizeof(infoHeader);
  
-    // 打开输出文件并写入BMP头和数据
     std::ofstream outfile(outputBmpFile, std::ios::binary);
     if (!outfile) {
         std::cerr << "Error opening output file!" << std::endl;
@@ -357,17 +343,16 @@ void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::
 		std::cerr << "Error: The file '" << inputBinFile << "' could not be opened." << std::endl;
 		return;
 	}
- 
+ 	int x;
 	std::vector<uint8_t> bgrData(width * height * 3);
- 	printf("width = %d\n", width);
 	for (int y = height - 1; y >= 0; --y) {
 		std::vector<uint8_t> rowBuffer(width * 4);
 		if (!binFile.read(reinterpret_cast<char*>(rowBuffer.data()), rowBuffer.size())) {
 			std::cerr << "Error: Not enough data in '" << inputBinFile << "' to fill the image." << std::endl;
 			return;
 		}
-		for (int x = 0; x < width;) {
-			if (colorspace == 4) {
+		for (x = 0; x < width;) {
+			if (colorspace == 0) {
 				bgrData[(y * width + x) * 3 + 0] = rowBuffer[(x * 4 + 3)]; // B
 				bgrData[(y * width + x) * 3 + 1] = rowBuffer[(x * 4 + 2)]; // G
 				bgrData[(y * width + x) * 3 + 2] = rowBuffer[(x * 4 + 1)]; // R
@@ -450,7 +435,7 @@ void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::
 	infoHeader.biClrImportant = 0;
  
 	fileHeader.bfSize = fileHeader.bfOffBits + infoHeader.biSizeImage;
- 
+	printf("debug2\n");
 	std::ofstream bmpFile(outputBmpFile, std::ios::binary);
 	if (!bmpFile.is_open()) {
 		std::cerr << "Error: The file '" << outputBmpFile << "' could not be created." << std::endl;

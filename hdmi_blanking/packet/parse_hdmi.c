@@ -25,6 +25,29 @@ bool compare_bytes(const uint8_t *bytes1, const uint8_t *bytes2, size_t size) {
 	return true;
 }
 
+uint8_t binaryToUint8(const char* binary) {
+    uint8_t number = 0;
+    
+    for (int i = 0; i < 8; ++i) {
+        if (binary[i] == '1') {
+            number |= (1U << (7 - i));
+        }
+    }
+    
+    return number;
+}
+
+char* uint64ToFormattedBinaryString(uint64_t num) {
+    char* binary = (char*)malloc(65 * sizeof(char));
+    if (binary == NULL) return NULL;
+    int index = 64;
+    binary[index] = '\0';
+    for (int i = 0; i < 64; ++i) {
+        binary[--index] = (num & (1ULL << i)) ? '1' : '0';
+    }
+    return binary;
+}
+
 
 uint32_t reverse_bytes_in_32bit(uint32_t num) {
 	uint32_t reversed = 0;
@@ -43,14 +66,12 @@ long getFileSize(const char *filename) {
         return -1;
     }
  
-    // 移动文件指针到文件末尾
     if (fseek(file, 0, SEEK_END) != 0) {
         perror("Failed to seek to end of file");
         fclose(file);
         return -1;
     }
  
-    // 获取当前文件指针的位置，即文件大小
     long size = ftell(file);
     if (size == -1L) {
         perror("Failed to get file size");
@@ -62,8 +83,9 @@ long getFileSize(const char *filename) {
 
 
 
-void hdmi_parse_packet(uint8_t (*data)[4])
+int hdmi_parse_packet(uint8_t (*data)[4])
 {
+	int ret = 0;
 	uint32_t head = 0;
 	uint32_t body_low32 = 0;
 	uint32_t body_high32 = 0;
@@ -77,11 +99,27 @@ void hdmi_parse_packet(uint8_t (*data)[4])
 	char strQ[1000];
 	char strR[1000];
 
-	head = reverse_bytes_in_32bit(head);
 	int_to_binary_string(head >> 8, binary_str);
 	strm2div(binary_str, "111000001", strQ, strR);
-	printf("ecc %s\n", strR);
 	printf("head 32-bit result: 0x%08X\n", head);
+	printf("ecc %s\n", strR);
+	if (binaryToUint8(strR) != uint8_t(head & 0xff)) {
+		uint8_t value = binaryToUint8(strR);
+		printf("detect ecc err correct: 0x%x err: 0x%x\n", binaryToUint8(strR), head & 0xff);
+		for (int i = 31; i >= 24; i--) {
+			data[i][3] = (data[i][3] & ~0x04) | ((value & 1) << 2);
+			value = value >> 1;
+		}
+		for (int i = 0; i < 32; i++) {
+			for (int j = 0; j < 4; j++) {
+				;//printf("0x%x ", data[i][j]);
+			}
+			//printf("\n");
+		}
+		ret = -1;
+	}
+	
+	head = reverse_bytes_in_32bit(head);
 	int bit_position = 0;
 	for (int i = 0; i < 16; i++) {
 		uint8_t byte2_bit0 = (data[i][2] & 1);
@@ -91,7 +129,6 @@ void hdmi_parse_packet(uint8_t (*data)[4])
 		body_low32 |= (byte3_bit0 << (31 - bit_position));
 		bit_position++; 
 	}
-	body_low32 = reverse_bytes_in_32bit(body_low32);
 	printf("body_low 32-bit result: 0x%08X\n", body_low32);
 	
 	bit_position = 0;
@@ -104,14 +141,39 @@ void hdmi_parse_packet(uint8_t (*data)[4])
 		body_high32 |= (byte3_bit0 << (31 - bit_position));
 		bit_position++;
 	}
-	body_high32 = reverse_bytes_in_32bit(body_high32);
 	printf("body_high 32-bit result: 0x%08X\n", body_high32);
+	uint64_t body = uint64_t(body_low32) << 32 | body_high32;
+	printf("body = 0x%lx\n", body);
+	char* binaryString = uint64ToFormattedBinaryString(body >> 8);
+    printf("64位二进制字符串: %s\n", binaryString);
+	strm2div(binaryString, "111000001", strQ, strR);
+	printf("ecc %s\n", strR);
+	if (binaryToUint8(strR) != uint8_t(body & 0xff)) {
+		uint8_t value = binaryToUint8(strR);
+		printf("detect ecc err correct: 0x%x err: 0x%lx\n", binaryToUint8(strR), body & 0xff);
+		for (int i = 31; i >= 28; i--) {
+			data[i][1] = (data[i][2] & ~0x01) | ((value & 1));
+			value = value >> 1;
+			data[i][2] = (data[i][1] & ~0x01) | ((value & 1));
+			value = value >> 1;
+		}
+		for (int i = 0; i < 32; i++) {
+			for (int j = 0; j < 4; j++) {
+				;//printf("0x%x ", data[i][j]);
+			}
+			//printf("\n");
+		}
+		ret = -1;
+	}
+	body_low32 = reverse_bytes_in_32bit(body_low32);
+	body_high32 = reverse_bytes_in_32bit(body_high32);
 	hdmi_parse_pkt_info(&head, &body_low32, &body_high32);
+	return ret;
 }
 
 int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive, int *vtotal, int *vactive, long *offset)
 {
-	FILE *file = fopen(input_file, "rb");
+	FILE *file = fopen(input_file, "rb+");
 	if (!file) {
 		perror("Failed to open file");
 		return -1;
@@ -163,7 +225,10 @@ int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive
 					for (int j = 0; j < 4; j++)
 						pkt_data[i][j] = buffer[i * 4 + j];
 				}
-				hdmi_parse_packet(pkt_data);
+				if (hdmi_parse_packet(pkt_data) == -1) {
+					fseek(file, -PACKET_SIZE, SEEK_CUR);
+					fwrite(pkt_data[0], 1, PACKET_SIZE, file);
+				}
 				if (packet_bytes_read != PACKET_SIZE) {
 					fprintf(stderr, "Failed to read full packet data\n");
 					fclose(file);
