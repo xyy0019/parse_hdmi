@@ -293,12 +293,12 @@ int hdmi_parse_blank_packet_and_fdet(char *input_file, int *htotal, int *hactive
 	return 0;
 }
 
-int hdmi_generate_bmpfile(char *filename, int *htotal, int *vtotal, int *hactive, int *vactive)
+int hdmi_generate_bmpfile(char *filename, char* outputimage_file, int *htotal, int *vtotal, int *hactive, int *vactive)
 {
 	int start_col;
 	int num_cols;
 	int start_row;
-	std::string outputImageFile = "output.bmp";
+	std::string outputImageFile = outputimage_file;
 	std::string input_file_path = filename;
 	std::ifstream input_file(input_file_path, std::ios::binary);
 	if (!input_file) {
@@ -409,7 +409,7 @@ int hdmi_replace(char *filename, char *rgbfile, int *htotal, int *vtotal, int *h
 	return 0;
 }
 
-int hdmi_parse(char *input_file) {
+int hdmi_parse(char *input_file, char *output_file) {
 	int htotal;
 	int hactive;
 	int vtotal;
@@ -422,7 +422,7 @@ int hdmi_parse(char *input_file) {
 		std::cerr << "Failed to parse blank." << std::endl;
 		return -1;
 	}
-	ret = hdmi_generate_bmpfile(input_file, &htotal, &vtotal, &hactive, &vactive);
+	ret = hdmi_generate_bmpfile(input_file, output_file, &htotal, &vtotal, &hactive, &vactive);
 	if (ret == -1) {
 		std::cerr << "Failed to gen bmpfile." << std::endl;
 		return -1;

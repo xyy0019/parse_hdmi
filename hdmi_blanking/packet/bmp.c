@@ -435,7 +435,6 @@ void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::
 	infoHeader.biClrImportant = 0;
  
 	fileHeader.bfSize = fileHeader.bfOffBits + infoHeader.biSizeImage;
-	printf("debug2\n");
 	std::ofstream bmpFile(outputBmpFile, std::ios::binary);
 	if (!bmpFile.is_open()) {
 		std::cerr << "Error: The file '" << outputBmpFile << "' could not be created." << std::endl;
