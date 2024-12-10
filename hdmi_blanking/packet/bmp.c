@@ -337,6 +337,7 @@ void hdmi_create_bmp_from_10bit_data(const std::string& inputBinFile, const std:
     outfile.close();
 }
 
+
 void hdmi_create_bmp_from_8bit_data(const std::string& inputBinFile, const std::string& outputBmpFile, int width, int height, int colorspace) {
 	std::ifstream binFile(inputBinFile, std::ios::binary);
 	if (!binFile.is_open()) {

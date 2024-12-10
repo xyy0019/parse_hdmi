@@ -403,8 +403,8 @@ int hdmi_replace(char *filename, char *rgbfile, int *htotal, int *vtotal, int *h
 
 	fclose(raw_file);
     fclose(rgb_file);
-    free(input_buffer);
-    free(output_buffer);
+	free(input_buffer);
+	free(output_buffer);
 	printf("A frame has been generatred success %s\n", filename);
 	return 0;
 }
